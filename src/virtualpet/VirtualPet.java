@@ -7,7 +7,7 @@ public class VirtualPet {
 	private int hunger;
 	private int energy;
 	private int boredom;
-	public ArrayList<String> favoriteFoods;
+	public ArrayList<String> favoriteFoods = new ArrayList<String>();
 
 	public VirtualPet(int hunger, int energy, int boredom) {
 		this.hunger = hunger;
@@ -48,16 +48,21 @@ public class VirtualPet {
 	}
 
 	public void addFavFoods() {
-		favoriteFoods.add("Mollusk");
-		favoriteFoods.add("Crab");
-		favoriteFoods.add("Shrimp");
+		favoriteFoods.add("mollusk");
+		favoriteFoods.add("crab");
+		favoriteFoods.add("shrimp");
 	}
-	
+
 	public String checkFood(String foodResponse) {
-		if (favoriteFoods.contains(foodResponse)) {
-			return "Oswald love that!";
+		int amount = 5;
+		addFavFoods();
+		if (favoriteFoods.contains(foodResponse.toLowerCase())) {
+			hunger += amount;
+			energy += amount;
+			return "Oswald loves " + foodResponse.toLowerCase() + "!";
 		} else {
-			return "Oswald hates that!";
+			return "Oswald hates " + foodResponse.toLowerCase() + "!\n" + "Oswalds favorite foods are "
+					+ favoriteFoods.get(0) + ", " + favoriteFoods.get(1) + ", and " + favoriteFoods.get(2) + ".";
 		}
 	}
 
@@ -104,7 +109,6 @@ public class VirtualPet {
 				boredom -= amount;
 				energy += amount;
 			}
-
 		}
 		if (hunger > 50) {
 			hunger = 50;

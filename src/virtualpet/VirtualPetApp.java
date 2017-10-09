@@ -1,7 +1,6 @@
 package virtualpet;
 
 import java.util.Random;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class VirtualPetApp {
@@ -20,13 +19,14 @@ public class VirtualPetApp {
 			System.exit(0);
 		}
 	}
+
 	private static String menuList;
 
 	public static void displayMenu(String menuList) {
-		System.out.println(
-				"What would you like to do with Oswald?\n" + "1. Feed Oswald.\n" + "2. Give Oswald a puzzle to solve.\n"
-						+ "3. Give Oswald a new place to play and hide.\n" + "4. Let Oswald get some sleep.\n"
-						+ "5. Leave Oswald alone with his thoughts.\n" + "6. Pick up Oswald and try to cuddle.");
+		System.out.println("What would you like to do with Oswald?\n" + "1. Feed Oswald.\n"
+				+ "2. Give Oswald a puzzle to solve.\n" + "3. Give Oswald a new place to play and hide.\n"
+				+ "4. Let Oswald get some sleep.\n" + "5. Leave Oswald alone with his thoughts.\n"
+				+ "6. Pick up Oswald and try to cuddle.\n" + "7. Give up and end the game.");
 	}
 
 	public static void main(String[] args) {
@@ -42,26 +42,24 @@ public class VirtualPetApp {
 		displayMenu(menuList);
 
 		int selection = input.nextInt();
-		while (selection < 1 || selection > 6) {
+		while (selection < 1 || selection > 7) {
 			System.out.println("You have entered an invalid choice.");
 			System.out.println(stats.oswaldStats());
 			displayMenu(menuList);
 			selection = input.nextInt();
 		}
 		int amount = 5;
-		while (selection >= 1 && selection <= 6) {
+		while (selection >= 1 && selection <= 7) {
 			int random = rand.nextInt(3) + 1;
 			if (selection == 1) {
 				if (stats.getHunger() == 50) {
 					System.out.println("Oswald is full. Please don't overfeed him.");
-				}
-				else if (stats.getBoredom() > 20) {
+				} else if (stats.getBoredom() > 35) {
 					System.out.println("Oswald is too bored to think about eating!");
 				} else {
 					System.out.println("What would you like to feed Oswald?");
 					String foodResponse = input.next();
-					stats.checkFood(foodResponse);
-					stats.feed(amount);
+					System.out.println(stats.checkFood(foodResponse));
 				}
 			}
 			if (selection == 2) {
@@ -96,13 +94,18 @@ public class VirtualPetApp {
 					System.out.println("Oswald is trying to escape. Maybe you could improve his care.");
 				}
 			}
+			if (selection == 7) {
+				System.out
+						.println("Oswald thought he had his forever home. You're going to court for animal negligence");
+				System.exit(0);
+			}
 			gameOver(stats.getHunger(), stats.getEnergy(), stats.getBoredom());
 			stats.tick(random, amount);
 			gameOver(stats.getHunger(), stats.getEnergy(), stats.getBoredom());
 			System.out.println(stats.oswaldStats());
 			displayMenu(menuList);
 			selection = input.nextInt();
-			while (selection < 0 || selection > 6) {
+			while (selection < 0 || selection > 7) {
 				System.out.println("You have entered an invalid choice.");
 				System.out.println(stats.oswaldStats());
 				displayMenu(menuList);
